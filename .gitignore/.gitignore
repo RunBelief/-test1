@@ -1,0 +1,26 @@
+import requests
+from lxml import html
+import os
+import time
+from multiprocessing. dummy import Pool as ThreadPool
+
+#aa = requests.get('https://book.douban.com/tag/%E5%B0%8F%E8%AF%B4?start=0&type=T')
+
+aa = 'https://movie.douban.com/chart'
+r = requests.get(aa).content
+#print (r)
+sel = html.fromstring(r)
+title = sel.xpath("//h1/text()")
+print (type(title))
+print (title[0])
+
+links = sel.xpath('//a[@class="nbg"]/@href')
+names = sel.xpath('//a[@class="nbg"]/@title')
+
+#print ("%s\t%s" %(links,names))
+ss2 = dict(zip(links,names))
+
+#print(ss2)
+
+for i,k in ss2.items():
+    print ("%s\t%s" %(i,k))
